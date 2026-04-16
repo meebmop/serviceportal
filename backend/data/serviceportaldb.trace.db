@@ -1,0 +1,784 @@
+2026-04-11 12:25:46.057172+02:00 database: close
+org.h2.message.DbException: Eingabe/Ausgabe Fehler: "Closing"
+IO Exception: "Closing" [90028-240]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.mvstore.db.Store.close(Store.java:352)
+	at org.h2.engine.Database.closeOpenFilesAndUnlock(Database.java:1314)
+	at org.h2.engine.Database.closeImpl(Database.java:1276)
+	at org.h2.engine.Database.close(Database.java:1195)
+	at org.h2.engine.Database.onShutdown(Database.java:1180)
+	at org.h2.engine.OnExitDatabaseCloser.onShutdown(OnExitDatabaseCloser.java:85)
+	at org.h2.engine.OnExitDatabaseCloser.run(OnExitDatabaseCloser.java:114)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Eingabe/Ausgabe Fehler: "Closing"
+IO Exception: "Closing" [90028-240]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 8 more
+Caused by: org.h2.mvstore.MVStoreException: java.lang.AssertionError: 12 [2.4.240/3]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.MVStore.executeFilestoreOperation(MVStore.java:1048)
+	at org.h2.mvstore.RandomAccessStore.compactMoveChunks(RandomAccessStore.java:463)
+	at org.h2.mvstore.RandomAccessStore.compactStore(RandomAccessStore.java:443)
+	at org.h2.mvstore.FileStore.compactStore(FileStore.java:891)
+	at org.h2.mvstore.FileStore.stop(FileStore.java:275)
+	at org.h2.mvstore.MVStore.closeStore(MVStore.java:803)
+	at org.h2.mvstore.MVStore.close(MVStore.java:763)
+	at org.h2.mvstore.db.Store.close(Store.java:348)
+	... 6 more
+Caused by: java.lang.AssertionError: 12
+	at org.h2.mvstore.FreeSpaceBitSet.allocate(FreeSpaceBitSet.java:153)
+	at org.h2.mvstore.FreeSpaceBitSet.predictAllocation(FreeSpaceBitSet.java:133)
+	at org.h2.mvstore.RandomAccessStore.predictAllocation(RandomAccessStore.java:101)
+	at org.h2.mvstore.RandomAccessStore.moveChunkInside(RandomAccessStore.java:628)
+	at org.h2.mvstore.RandomAccessStore.compactMoveChunks(RandomAccessStore.java:569)
+	at org.h2.mvstore.RandomAccessStore.compactMoveChunks(RandomAccessStore.java:481)
+	at org.h2.mvstore.RandomAccessStore.lambda$compactMoveChunks$1(RandomAccessStore.java:468)
+	at org.h2.mvstore.FileStore.executeFileStoreOperation(FileStore.java:1894)
+	at org.h2.mvstore.MVStore.executeFilestoreOperation(MVStore.java:1044)
+	... 13 more
+2026-04-12 15:04:49.394896+02:00 jdbc[35]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "DELETE [*]* FROM service_request"; erwartet "identifier"
+Syntax error in SQL statement "DELETE [*]* FROM service_request"; expected "identifier"; SQL statement:
+DELETE * FROM service_request [42001-240]
+2026-04-12 15:05:10.397221+02:00 jdbc[35]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "DELETE [*]* FROM SERVICE_REQUEST"; erwartet "identifier"
+Syntax error in SQL statement "DELETE [*]* FROM SERVICE_REQUEST"; expected "identifier"; SQL statement:
+DELETE * FROM SERVICE_REQUEST [42001-240]
+2026-04-12 15:07:49.416497+02:00 jdbc[38]: null
+org.h2.message.DbException: Die Datenbank-Verbindung wurde nicht explizit geschlossen (jetzt in der Müllabfuhr)
+The connection was not closed by the application and is garbage collected [90018-240]
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.jdbc.JdbcConnection.closeOld(JdbcConnection.java:217)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:134)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: Die Datenbank-Verbindung wurde nicht explizit geschlossen (jetzt in der Müllabfuhr)
+The connection was not closed by the application and is garbage collected [90018-240]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 16 more
+2026-04-12 15:24:53.854069+02:00 jdbc[36]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Feld "CATEGORY" nicht gefunden
+Column "CATEGORY" not found; SQL statement:
+INSERT INTO service_request (
+  id,
+  subject,
+  category,
+  message,
+  status,
+  priority,
+  admin_comment,
+  updated_by,
+  created_at,
+  updated_at,
+  user_id,
+  service_offer_id
+)
+VALUES
+  (
+    1,
+    'Meldebescheinigung für Vermieter benötigt',
+    'Bürgerservice',
+    'Ich benötige kurzfristig eine aktuelle Meldebescheinigung für die Vorlage bei meinem Vermieter. Können Sie mir mitteilen, ob die Beantragung vollständig online möglich ist?',
+    'EINGEGANGEN',
+    'NORMAL',
+    NULL,
+    'max.mustermann@test.de',
+    TIMESTAMP '2025-07-20 09:15:00',
+    TIMESTAMP '2025-07-20 09:15:00',
+    2,
+    2
+  ),
+  (
+    2,
+    'Ummeldung nach Umzug innerhalb der Stadt',
+    'Bürgerservice',
+    'Ich bin vor wenigen Tagen innerhalb der Stadt umgezogen und möchte meinen Wohnsitz ummelden. Welche Unterlagen werden dafür benötigt?',
+    'IN_BEARBEITUNG',
+    'NORMAL',
+    'Unterlagen wurden geprüft, Rückmeldung erfolgt zeitnah.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-21 10:30:00',
+    TIMESTAMP '2025-07-22 08:45:00',
+    2,
+    3
+  ),
+  (
+    3,
+    'Neuer Personalausweis wegen Ablauf',
+    'Ausweisdokumente',
+    'Mein Personalausweis läuft in Kürze ab. Ich möchte wissen, wie ich einen neuen Ausweis beantragen kann und ob vorab ein Termin erforderlich ist.',
+    'ABGESCHLOSSEN',
+    'NORMAL',
+    'Hinweise und Unterlagenliste wurden versendet.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-18 14:20:00',
+    TIMESTAMP '2025-07-19 11:05:00',
+    3,
+    66
+  ),
+  (
+    4,
+    'Reisepass für Auslandsreise beantragen',
+    'Ausweisdokumente',
+    'Ich plane in einigen Monaten eine Auslandsreise und möchte einen Reisepass beantragen. Bitte teilen Sie mir mit, welche Unterlagen ich mitbringen muss.',
+    'EINGEGANGEN',
+    'NORMAL',
+    NULL,
+    'lukas.schneider@test.de',
+    TIMESTAMP '2025-07-23 16:00:00',
+    TIMESTAMP '2025-07-23 16:00:00',
+    3,
+    67
+  ),
+  (
+    5,
+    'Termin im Bürgerbüro verschieben',
+    'Terminservice',
+    'Ich habe bereits einen Termin im Bürgerbüro, kann diesen aber nicht wahrnehmen. Ist eine Terminverschiebung online möglich?',
+    'IN_BEARBEITUNG',
+    'NIEDRIG',
+    'Terminoptionen werden geprüft.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-24 08:10:00',
+    TIMESTAMP '2025-07-24 09:30:00',
+    4,
+    68
+  ),
+  (
+    6,
+    'Führungszeugnis für Arbeitgeber erforderlich',
+    'Bescheinigungen',
+    'Für eine neue Arbeitsstelle benötige ich ein Führungszeugnis. Ich möchte wissen, wie die Beantragung abläuft und wie lange die Bearbeitung ungefähr dauert.',
+    'EINGEGANGEN',
+    'HOCH',
+    NULL,
+    'anna.becker@test.de',
+    TIMESTAMP '2025-07-25 11:25:00',
+    TIMESTAMP '2025-07-25 11:25:00',
+    2,
+    69
+  ),
+  (
+    7,
+    'Geburtsurkunde erneut anfordern',
+    'Urkunden',
+    'Ich benötige eine neue Geburtsurkunde für eine Behördensache. Können Sie mir mitteilen, wie ich die Urkunde online beantragen kann?',
+    'ABGESCHLOSSEN',
+    'NORMAL',
+    'Beantragung erfolgreich abgeschlossen.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-17 13:40:00',
+    TIMESTAMP '2025-07-18 10:00:00',
+    3,
+    70
+  ),
+  (
+    8,
+    'Mülltonne am Wohnhaus beschädigt',
+    'Entsorgung',
+    'Die Restmülltonne vor unserem Wohnhaus ist am Deckel beschädigt und lässt sich nicht mehr richtig schließen. Bitte prüfen Sie einen Austausch.',
+    'IN_BEARBEITUNG',
+    'NORMAL',
+    'Austausch wurde an den zuständigen Bereich weitergegeben.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-22 07:55:00',
+    TIMESTAMP '2025-07-22 15:20:00',
+    4,
+    71
+  ),
+  (
+    9,
+    'Abgesenkter Bordstein fehlt am Fußgängerüberweg',
+    'Barrierefreiheit',
+    'An der Kreuzung Marktstraße und Lindenweg fehlt an einer Seite ein abgesenkter Bordstein. Dadurch ist der Übergang für Rollstuhlnutzende erschwert.',
+    'IN_BEARBEITUNG',
+    'HOCH',
+    'Meldung wurde an den zuständigen Fachbereich weitergeleitet.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-21 12:00:00',
+    TIMESTAMP '2025-07-23 09:10:00',
+    3,
+    72
+  ) [42122-240]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:778)
+	at org.h2.command.Parser.parseColumn(Parser.java:1174)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1159)
+	at org.h2.command.Parser.parseInsert(Parser.java:1533)
+	at org.h2.command.Parser.parsePrepared(Parser.java:701)
+	at org.h2.command.Parser.parse(Parser.java:584)
+	at org.h2.command.Parser.parse(Parser.java:559)
+	at org.h2.command.Parser.prepareCommand(Parser.java:487)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:647)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:563)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1160)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1344)
+	at org.h2.server.web.WebApp.query(WebApp.java:1142)
+	at org.h2.server.web.WebApp.query(WebApp.java:1118)
+	at org.h2.server.web.WebApp.process(WebApp.java:244)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:176)
+	at org.h2.server.web.JakartaWebServlet.doGet(JakartaWebServlet.java:129)
+	at org.h2.server.web.JakartaWebServlet.doPost(JakartaWebServlet.java:166)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:371)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1779)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-04-12 15:25:09.656384+02:00 jdbc[36]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Feld "CATEGORY" nicht gefunden
+Column "CATEGORY" not found; SQL statement:
+INSERT INTO service_request (
+  id,
+  subject,
+  category,
+  message,
+  status,
+  priority,
+  admin_comment,
+  updated_by,
+  created_at,
+  updated_at,
+  user_id,
+  service_offer_id
+)
+VALUES
+  (
+    1,
+    'Meldebescheinigung für Vermieter benötigt',
+    'Bürgerservice',
+    'Ich benötige kurzfristig eine aktuelle Meldebescheinigung für die Vorlage bei meinem Vermieter. Können Sie mir mitteilen, ob die Beantragung vollständig online möglich ist?',
+    'EINGEGANGEN',
+    'NORMAL',
+    NULL,
+    'max.mustermann@test.de',
+    TIMESTAMP '2025-07-20 09:15:00',
+    TIMESTAMP '2025-07-20 09:15:00',
+    2,
+    2
+  ),
+  (
+    2,
+    'Ummeldung nach Umzug innerhalb der Stadt',
+    'Bürgerservice',
+    'Ich bin vor wenigen Tagen innerhalb der Stadt umgezogen und möchte meinen Wohnsitz ummelden. Welche Unterlagen werden dafür benötigt?',
+    'IN_BEARBEITUNG',
+    'NORMAL',
+    'Unterlagen wurden geprüft, Rückmeldung erfolgt zeitnah.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-21 10:30:00',
+    TIMESTAMP '2025-07-22 08:45:00',
+    2,
+    3
+  ),
+  (
+    3,
+    'Neuer Personalausweis wegen Ablauf',
+    'Ausweisdokumente',
+    'Mein Personalausweis läuft in Kürze ab. Ich möchte wissen, wie ich einen neuen Ausweis beantragen kann und ob vorab ein Termin erforderlich ist.',
+    'ABGESCHLOSSEN',
+    'NORMAL',
+    'Hinweise und Unterlagenliste wurden versendet.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-18 14:20:00',
+    TIMESTAMP '2025-07-19 11:05:00',
+    3,
+    66
+  ),
+  (
+    4,
+    'Reisepass für Auslandsreise beantragen',
+    'Ausweisdokumente',
+    'Ich plane in einigen Monaten eine Auslandsreise und möchte einen Reisepass beantragen. Bitte teilen Sie mir mit, welche Unterlagen ich mitbringen muss.',
+    'EINGEGANGEN',
+    'NORMAL',
+    NULL,
+    'lukas.schneider@test.de',
+    TIMESTAMP '2025-07-23 16:00:00',
+    TIMESTAMP '2025-07-23 16:00:00',
+    3,
+    67
+  ),
+  (
+    5,
+    'Termin im Bürgerbüro verschieben',
+    'Terminservice',
+    'Ich habe bereits einen Termin im Bürgerbüro, kann diesen aber nicht wahrnehmen. Ist eine Terminverschiebung online möglich?',
+    'IN_BEARBEITUNG',
+    'NIEDRIG',
+    'Terminoptionen werden geprüft.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-24 08:10:00',
+    TIMESTAMP '2025-07-24 09:30:00',
+    4,
+    68
+  ),
+  (
+    6,
+    'Führungszeugnis für Arbeitgeber erforderlich',
+    'Bescheinigungen',
+    'Für eine neue Arbeitsstelle benötige ich ein Führungszeugnis. Ich möchte wissen, wie die Beantragung abläuft und wie lange die Bearbeitung ungefähr dauert.',
+    'EINGEGANGEN',
+    'HOCH',
+    NULL,
+    'anna.becker@test.de',
+    TIMESTAMP '2025-07-25 11:25:00',
+    TIMESTAMP '2025-07-25 11:25:00',
+    2,
+    69
+  ),
+  (
+    7,
+    'Geburtsurkunde erneut anfordern',
+    'Urkunden',
+    'Ich benötige eine neue Geburtsurkunde für eine Behördensache. Können Sie mir mitteilen, wie ich die Urkunde online beantragen kann?',
+    'ABGESCHLOSSEN',
+    'NORMAL',
+    'Beantragung erfolgreich abgeschlossen.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-17 13:40:00',
+    TIMESTAMP '2025-07-18 10:00:00',
+    3,
+    70
+  ),
+  (
+    8,
+    'Mülltonne am Wohnhaus beschädigt',
+    'Entsorgung',
+    'Die Restmülltonne vor unserem Wohnhaus ist am Deckel beschädigt und lässt sich nicht mehr richtig schließen. Bitte prüfen Sie einen Austausch.',
+    'IN_BEARBEITUNG',
+    'NORMAL',
+    'Austausch wurde an den zuständigen Bereich weitergegeben.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-22 07:55:00',
+    TIMESTAMP '2025-07-22 15:20:00',
+    4,
+    71
+  ),
+  (
+    9,
+    'Abgesenkter Bordstein fehlt am Fußgängerüberweg',
+    'Barrierefreiheit',
+    'An der Kreuzung Marktstraße und Lindenweg fehlt an einer Seite ein abgesenkter Bordstein. Dadurch ist der Übergang für Rollstuhlnutzende erschwert.',
+    'IN_BEARBEITUNG',
+    'HOCH',
+    'Meldung wurde an den zuständigen Fachbereich weitergeleitet.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-21 12:00:00',
+    TIMESTAMP '2025-07-23 09:10:00',
+    3,
+    72
+  ) [42122-240]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:778)
+	at org.h2.command.Parser.parseColumn(Parser.java:1174)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1159)
+	at org.h2.command.Parser.parseInsert(Parser.java:1533)
+	at org.h2.command.Parser.parsePrepared(Parser.java:701)
+	at org.h2.command.Parser.parse(Parser.java:584)
+	at org.h2.command.Parser.parse(Parser.java:559)
+	at org.h2.command.Parser.prepareCommand(Parser.java:487)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:647)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:563)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1160)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1344)
+	at org.h2.server.web.WebApp.query(WebApp.java:1142)
+	at org.h2.server.web.WebApp.query(WebApp.java:1118)
+	at org.h2.server.web.WebApp.process(WebApp.java:244)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:176)
+	at org.h2.server.web.JakartaWebServlet.doGet(JakartaWebServlet.java:129)
+	at org.h2.server.web.JakartaWebServlet.doPost(JakartaWebServlet.java:166)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:371)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1779)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-04-12 15:25:54.125702+02:00 jdbc[45]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Feld "CATEGORY" nicht gefunden
+Column "CATEGORY" not found; SQL statement:
+INSERT INTO service_request (
+  id,
+  subject,
+  category,
+  message,
+  status,
+  priority,
+  admin_comment,
+  updated_by,
+  created_at,
+  updated_at,
+  user_id,
+  service_offer_id
+)
+VALUES
+  (
+    1,
+    'Meldebescheinigung für Vermieter benötigt',
+    'Bürgerservice',
+    'Ich benötige kurzfristig eine aktuelle Meldebescheinigung für die Vorlage bei meinem Vermieter. Können Sie mir mitteilen, ob die Beantragung vollständig online möglich ist?',
+    'EINGEGANGEN',
+    'NORMAL',
+    NULL,
+    'max.mustermann@test.de',
+    TIMESTAMP '2025-07-20 09:15:00',
+    TIMESTAMP '2025-07-20 09:15:00',
+    2,
+    2
+  ),
+  (
+    2,
+    'Ummeldung nach Umzug innerhalb der Stadt',
+    'Bürgerservice',
+    'Ich bin vor wenigen Tagen innerhalb der Stadt umgezogen und möchte meinen Wohnsitz ummelden. Welche Unterlagen werden dafür benötigt?',
+    'IN_BEARBEITUNG',
+    'NORMAL',
+    'Unterlagen wurden geprüft, Rückmeldung erfolgt zeitnah.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-21 10:30:00',
+    TIMESTAMP '2025-07-22 08:45:00',
+    2,
+    3
+  ),
+  (
+    3,
+    'Neuer Personalausweis wegen Ablauf',
+    'Ausweisdokumente',
+    'Mein Personalausweis läuft in Kürze ab. Ich möchte wissen, wie ich einen neuen Ausweis beantragen kann und ob vorab ein Termin erforderlich ist.',
+    'ABGESCHLOSSEN',
+    'NORMAL',
+    'Hinweise und Unterlagenliste wurden versendet.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-18 14:20:00',
+    TIMESTAMP '2025-07-19 11:05:00',
+    3,
+    66
+  ),
+  (
+    4,
+    'Reisepass für Auslandsreise beantragen',
+    'Ausweisdokumente',
+    'Ich plane in einigen Monaten eine Auslandsreise und möchte einen Reisepass beantragen. Bitte teilen Sie mir mit, welche Unterlagen ich mitbringen muss.',
+    'EINGEGANGEN',
+    'NORMAL',
+    NULL,
+    'lukas.schneider@test.de',
+    TIMESTAMP '2025-07-23 16:00:00',
+    TIMESTAMP '2025-07-23 16:00:00',
+    3,
+    67
+  ),
+  (
+    5,
+    'Termin im Bürgerbüro verschieben',
+    'Terminservice',
+    'Ich habe bereits einen Termin im Bürgerbüro, kann diesen aber nicht wahrnehmen. Ist eine Terminverschiebung online möglich?',
+    'IN_BEARBEITUNG',
+    'NIEDRIG',
+    'Terminoptionen werden geprüft.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-24 08:10:00',
+    TIMESTAMP '2025-07-24 09:30:00',
+    4,
+    68
+  ),
+  (
+    6,
+    'Führungszeugnis für Arbeitgeber erforderlich',
+    'Bescheinigungen',
+    'Für eine neue Arbeitsstelle benötige ich ein Führungszeugnis. Ich möchte wissen, wie die Beantragung abläuft und wie lange die Bearbeitung ungefähr dauert.',
+    'EINGEGANGEN',
+    'HOCH',
+    NULL,
+    'anna.becker@test.de',
+    TIMESTAMP '2025-07-25 11:25:00',
+    TIMESTAMP '2025-07-25 11:25:00',
+    2,
+    69
+  ),
+  (
+    7,
+    'Geburtsurkunde erneut anfordern',
+    'Urkunden',
+    'Ich benötige eine neue Geburtsurkunde für eine Behördensache. Können Sie mir mitteilen, wie ich die Urkunde online beantragen kann?',
+    'ABGESCHLOSSEN',
+    'NORMAL',
+    'Beantragung erfolgreich abgeschlossen.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-17 13:40:00',
+    TIMESTAMP '2025-07-18 10:00:00',
+    3,
+    70
+  ),
+  (
+    8,
+    'Mülltonne am Wohnhaus beschädigt',
+    'Entsorgung',
+    'Die Restmülltonne vor unserem Wohnhaus ist am Deckel beschädigt und lässt sich nicht mehr richtig schließen. Bitte prüfen Sie einen Austausch.',
+    'IN_BEARBEITUNG',
+    'NORMAL',
+    'Austausch wurde an den zuständigen Bereich weitergegeben.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-22 07:55:00',
+    TIMESTAMP '2025-07-22 15:20:00',
+    4,
+    71
+  ),
+  (
+    9,
+    'Abgesenkter Bordstein fehlt am Fußgängerüberweg',
+    'Barrierefreiheit',
+    'An der Kreuzung Marktstraße und Lindenweg fehlt an einer Seite ein abgesenkter Bordstein. Dadurch ist der Übergang für Rollstuhlnutzende erschwert.',
+    'IN_BEARBEITUNG',
+    'HOCH',
+    'Meldung wurde an den zuständigen Fachbereich weitergeleitet.',
+    'admin@test.de',
+    TIMESTAMP '2025-07-21 12:00:00',
+    TIMESTAMP '2025-07-23 09:10:00',
+    3,
+    72
+  ) [42122-240]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:778)
+	at org.h2.command.Parser.parseColumn(Parser.java:1174)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1159)
+	at org.h2.command.Parser.parseInsert(Parser.java:1533)
+	at org.h2.command.Parser.parsePrepared(Parser.java:701)
+	at org.h2.command.Parser.parse(Parser.java:584)
+	at org.h2.command.Parser.parse(Parser.java:559)
+	at org.h2.command.Parser.prepareCommand(Parser.java:487)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:647)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:563)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1160)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1344)
+	at org.h2.server.web.WebApp.query(WebApp.java:1142)
+	at org.h2.server.web.WebApp.query(WebApp.java:1118)
+	at org.h2.server.web.WebApp.process(WebApp.java:244)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:176)
+	at org.h2.server.web.JakartaWebServlet.doGet(JakartaWebServlet.java:129)
+	at org.h2.server.web.JakartaWebServlet.doPost(JakartaWebServlet.java:166)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:371)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1779)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1583)

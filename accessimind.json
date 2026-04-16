@@ -1,0 +1,66 @@
+{
+  "version": "1.0.0",
+  "createdAt": "2026-04-10T17:57:34.725Z",
+  "lastModified": "2026-04-10T17:57:34.725Z",
+  "wizard": {
+    "completed": false,
+    "steps": {
+      "provider": {
+        "completed": false
+      },
+      "model": {
+        "completed": false
+      },
+      "apiKey": {
+        "completed": false,
+        "hasValue": false
+      },
+      "wcagLevel": {
+        "completed": false
+      },
+      "language": {
+        "completed": false
+      },
+      "jiraConfig": {
+        "completed": false
+      },
+      "ollamaUrl": {
+        "completed": false
+      }
+    }
+  },
+  "settings": {
+    "ai": {
+      "apiKeyConfigured": false
+    },
+    "aiModels": {},
+    "language": "auto",
+    "wcagLevel": "AA",
+    "autoApply": false,
+    "includeComments": true,
+    "enableStatistics": true,
+    "responseDetail": "summary",
+    "interfacePreferences": {
+      "theme": "auto",
+      "compactMode": false,
+      "showAdvancedOptions": false
+    },
+    "shortcuts": {
+      "analyzeOpenCode": "ctrl+alt+w",
+      "analyzeSelectedCode": "ctrl+alt+shift+w",
+      "showInterface": "ctrl+alt+u"
+    }
+  },
+  "statistics": {
+    "enabled": true,
+    "sessionCount": 0,
+    "totalAnalyses": 0,
+    "totalImprovements": 0
+  },
+  "metadata": {
+    "extensionVersion": "1.1.4",
+    "vscodeVersion": "1.115.0",
+    "platform": "win32",
+    "workspaceId": "file:///c%3A/Users/Marie/Desktop/serviceportal"
+  }
+}
