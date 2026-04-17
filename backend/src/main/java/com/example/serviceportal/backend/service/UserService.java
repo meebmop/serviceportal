@@ -33,29 +33,25 @@ public class UserService {
 
     public UserResponseDto updateRole(Long id, UserRoleUpdateDto roleUpdateDto, Authentication authentication) {
         UserRole newRole = parseRole(roleUpdateDto.getRole());
-
         User existingUser = findUserByIdOrThrow(id);
         User currentAdmin = findAuthenticatedUser(authentication);
 
         if (currentAdmin.getId().equals(existingUser.getId()) && newRole != UserRole.ADMIN) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Du kannst dir die Administratorrolle nicht selbst entziehen."
-            );
+                    "Du kannst dir die Administratorrolle nicht selbst entziehen.");
         }
 
-        if (existingUser.getRole() == UserRole.ADMIN
-                && newRole != UserRole.ADMIN
-                && isLastAdmin(existingUser)) {
+        if (existingUser.getRole() == UserRole.ADMIN && newRole != UserRole.ADMIN && isLastAdmin(existingUser)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Der letzte verbleibende Administrator kann nicht herabgestuft werden."
-            );
+                    "Der letzte verbleibende Administrator kann nicht herabgestuft werden.");
         }
 
         existingUser.setRole(newRole);
 
         User savedUser = userRepository.save(existingUser);
+
         return mapToDto(savedUser);
     }
 
@@ -66,29 +62,25 @@ public class UserService {
         if (currentAdmin.getId().equals(existingUser.getId())) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Du kannst dein eigenes Benutzerkonto nicht löschen."
-            );
+                    "Du kannst dein eigenes Benutzerkonto nicht löschen.");
         }
 
         if (existingUser.getRole() == UserRole.ADMIN) {
             if (isLastAdmin(existingUser)) {
                 throw new ResponseStatusException(
                         HttpStatus.BAD_REQUEST,
-                        "Der letzte verbleibende Administrator kann nicht gelöscht werden."
-                );
+                        "Der letzte verbleibende Administrator kann nicht gelöscht werden.");
             }
 
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Administratoren können aus Sicherheitsgründen nicht gelöscht werden."
-            );
+                    "Administratoren können aus Sicherheitsgründen nicht gelöscht werden.");
         }
 
         if (serviceRequestRepository.existsByUser_Id(id)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Benutzer mit vorhandenen Serviceanfragen können nicht gelöscht werden."
-            );
+                    "Benutzer mit vorhandenen Serviceanfragen können nicht gelöscht werden.");
         }
 
         userRepository.delete(existingUser);
@@ -125,7 +117,6 @@ public class UserService {
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getRole().toString()
-        );
+                user.getRole().toString());
     }
 }

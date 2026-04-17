@@ -27,8 +27,7 @@ public class ServiceRequestController {
     @ResponseStatus(HttpStatus.CREATED)
     public RequestResponseDto createRequest(
             @Valid @RequestBody RequestCreateDto requestDto,
-            Authentication authentication
-    ) {
+            Authentication authentication) {
         return serviceRequestService.createRequest(requestDto, authentication);
     }
 
@@ -36,8 +35,7 @@ public class ServiceRequestController {
     @PreAuthorize("hasRole('ADMIN')")
     public List<RequestResponseDto> getAllRequests(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size
-    ) {
+            @RequestParam(defaultValue = "20") int size) {
         return serviceRequestService.getAllRequests(page, size);
     }
 
@@ -46,8 +44,7 @@ public class ServiceRequestController {
     public List<RequestResponseDto> getMyRequests(
             Authentication authentication,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size
-    ) {
+            @RequestParam(defaultValue = "20") int size) {
         return serviceRequestService.getMyRequests(authentication, page, size);
     }
 
@@ -56,8 +53,7 @@ public class ServiceRequestController {
     public RequestResponseDto updateStatus(
             @PathVariable Long id,
             @Valid @RequestBody StatusUpdateDto statusUpdateDto,
-            Authentication authentication
-    ) {
+            Authentication authentication) {
         return serviceRequestService.updateStatus(id, statusUpdateDto, authentication);
     }
 }

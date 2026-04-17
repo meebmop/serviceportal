@@ -31,8 +31,7 @@ public class UserController {
     public UserResponseDto updateRole(
             @PathVariable Long id,
             @Valid @RequestBody UserRoleUpdateDto roleUpdateDto,
-            Authentication authentication
-    ) {
+            Authentication authentication) {
         return userService.updateRole(id, roleUpdateDto, authentication);
     }
 

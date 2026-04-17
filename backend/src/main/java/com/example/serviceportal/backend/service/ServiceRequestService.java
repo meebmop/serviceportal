@@ -30,8 +30,7 @@ public class ServiceRequestService {
     public ServiceRequestService(
             ServiceRequestRepository serviceRequestRepository,
             ServiceOfferRepository serviceOfferRepository,
-            UserRepository userRepository
-    ) {
+            UserRepository userRepository) {
         this.serviceRequestRepository = serviceRequestRepository;
         this.serviceOfferRepository = serviceOfferRepository;
         this.userRepository = userRepository;
@@ -40,10 +39,9 @@ public class ServiceRequestService {
     public RequestResponseDto createRequest(RequestCreateDto requestDto, Authentication authentication) {
         User user = findAuthenticatedUser(authentication);
         ServiceOffer serviceOffer = findOfferByIdOrThrow(requestDto.getServiceOfferId());
-
         RequestPriority priority = parsePriority(requestDto.getPriority());
-
         ServiceRequest request = new ServiceRequest();
+
         request.setServiceOffer(serviceOffer);
         request.setUser(user);
         request.setSubject(requestDto.getSubject());
@@ -54,13 +52,13 @@ public class ServiceRequestService {
         request.setUpdatedBy(user.getEmail());
 
         ServiceRequest savedRequest = serviceRequestRepository.save(request);
+
         return mapToDto(savedRequest);
     }
 
     public List<RequestResponseDto> getAllRequests(int page, int size) {
         return serviceRequestRepository.findAllByOrderByCreatedAtDesc(
-                        PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"))
-                )
+                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")))
                 .stream()
                 .map(this::mapToDto)
                 .toList();
@@ -70,22 +68,16 @@ public class ServiceRequestService {
         User user = findAuthenticatedUser(authentication);
 
         return serviceRequestRepository.findByUser_IdOrderByCreatedAtDesc(
-                        user.getId(),
-                        PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"))
-                )
+                user.getId(),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")))
                 .stream()
                 .map(this::mapToDto)
                 .toList();
     }
 
-    public RequestResponseDto updateStatus(
-            Long id,
-            StatusUpdateDto statusUpdateDto,
-            Authentication authentication
-    ) {
+    public RequestResponseDto updateStatus(Long id, StatusUpdateDto statusUpdateDto, Authentication authentication) {
         ServiceRequest request = findRequestByIdOrThrow(id);
         User admin = findAuthenticatedUser(authentication);
-
         RequestStatus status = parseStatus(statusUpdateDto.getStatus());
 
         request.setStatus(status);
@@ -93,6 +85,7 @@ public class ServiceRequestService {
         request.setUpdatedBy(admin.getEmail());
 
         ServiceRequest savedRequest = serviceRequestRepository.save(request);
+
         return mapToDto(savedRequest);
     }
 
@@ -109,8 +102,7 @@ public class ServiceRequestService {
         return serviceOfferRepository.findById(offerId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.BAD_REQUEST,
-                        "Das ausgewählte Serviceangebot existiert nicht."
-                ));
+                        "Das ausgewählte Serviceangebot existiert nicht."));
     }
 
     private ServiceRequest findRequestByIdOrThrow(Long id) {
@@ -124,8 +116,7 @@ public class ServiceRequestService {
         } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Ungültiger Status. Erlaubt sind: Eingegangen, In Bearbeitung, Abgeschlossen."
-            );
+                    "Ungültiger Status. Erlaubt sind: Eingegangen, In Bearbeitung, Abgeschlossen.");
         }
     }
 
@@ -135,8 +126,7 @@ public class ServiceRequestService {
         } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Ungültige Priorität. Erlaubt sind: Niedrig, Normal, Hoch."
-            );
+                    "Ungültige Priorität. Erlaubt sind: Niedrig, Normal, Hoch.");
         }
     }
 
@@ -146,6 +136,7 @@ public class ServiceRequestService {
         }
 
         String normalized = adminComment.trim();
+
         return normalized.isEmpty() ? null : normalized;
     }
 
@@ -163,7 +154,6 @@ public class ServiceRequestService {
                 request.getAdminComment(),
                 request.getUpdatedBy(),
                 request.getCreatedAt(),
-                request.getUpdatedAt()
-        );
+                request.getUpdatedAt());
     }
 }

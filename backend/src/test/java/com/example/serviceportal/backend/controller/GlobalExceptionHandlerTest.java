@@ -26,8 +26,7 @@ class GlobalExceptionHandlerTest {
 
     @Test
     void handleValidation_shouldReturnFieldErrors() throws NoSuchMethodException {
-        BeanPropertyBindingResult bindingResult =
-                new BeanPropertyBindingResult(new Object(), "request");
+        BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "request");
         bindingResult.addError(new FieldError("request", "email", "Ungültige E-Mail"));
         bindingResult.addError(new FieldError("request", "password", "Passwort zu kurz"));
 
@@ -47,8 +46,7 @@ class GlobalExceptionHandlerTest {
 
     @Test
     void handleResponseStatus_shouldReturnReasonMessage() {
-        ResponseStatusException ex =
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Nicht gefunden");
+        ResponseStatusException ex = new ResponseStatusException(HttpStatus.NOT_FOUND, "Nicht gefunden");
 
         ResponseEntity<ApiErrorResponse> response = handler.handleResponseStatus(ex);
 
@@ -86,14 +84,12 @@ class GlobalExceptionHandlerTest {
         assertEquals("Validierungsfehler", response.getBody().getMessage());
         assertEquals(
                 "darf nicht leer sein",
-                response.getBody().getFieldErrors().get("createRequest.subject")
-        );
+                response.getBody().getFieldErrors().get("createRequest.subject"));
     }
 
     @Test
     void handleUnexpected_shouldReturnInternalServerError() {
-        ResponseEntity<ApiErrorResponse> response =
-                handler.handleUnexpected(new RuntimeException("boom"));
+        ResponseEntity<ApiErrorResponse> response = handler.handleUnexpected(new RuntimeException("boom"));
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals(500, response.getBody().getStatus());

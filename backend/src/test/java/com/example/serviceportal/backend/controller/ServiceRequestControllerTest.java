@@ -52,8 +52,7 @@ class ServiceRequestControllerTest {
     void getAllRequests_shouldDelegateToService() {
         List<RequestResponseDto> expected = List.of(
                 createResponseDto(1L, "Betreff 1", "Eingegangen"),
-                createResponseDto(2L, "Betreff 2", "Abgeschlossen")
-        );
+                createResponseDto(2L, "Betreff 2", "Abgeschlossen"));
 
         when(serviceRequestService.getAllRequests(0, 20)).thenReturn(expected);
 
@@ -66,8 +65,7 @@ class ServiceRequestControllerTest {
     @Test
     void getMyRequests_shouldDelegateToService() {
         List<RequestResponseDto> expected = List.of(
-                createResponseDto(1L, "Mein Betreff", "In Bearbeitung")
-        );
+                createResponseDto(1L, "Mein Betreff", "In Bearbeitung"));
 
         when(serviceRequestService.getMyRequests(authentication, 0, 10)).thenReturn(expected);
 
@@ -108,7 +106,6 @@ class ServiceRequestControllerTest {
                 null,
                 "admin@test.de",
                 LocalDateTime.now(),
-                LocalDateTime.now()
-        );
+                LocalDateTime.now());
     }
 }

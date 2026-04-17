@@ -80,9 +80,11 @@ function AdminOffersPage() {
     if (!formData.description.trim()) {
       errors.description = "Bitte gib eine Beschreibung ein.";
     } else if (formData.description.trim().length < 10) {
-      errors.description = "Die Beschreibung muss mindestens 10 Zeichen lang sein.";
+      errors.description =
+        "Die Beschreibung muss mindestens 10 Zeichen lang sein.";
     } else if (formData.description.trim().length > 500) {
-      errors.description = "Die Beschreibung darf maximal 500 Zeichen lang sein.";
+      errors.description =
+        "Die Beschreibung darf maximal 500 Zeichen lang sein.";
     }
 
     return errors;
@@ -121,7 +123,9 @@ function AdminOffersPage() {
     setSubmitting(true);
 
     try {
-      const url = editingOfferId ? `/api/offers/${editingOfferId}` : "/api/offers";
+      const url = editingOfferId
+        ? `/api/offers/${editingOfferId}`
+        : "/api/offers";
       const method = editingOfferId ? "PUT" : "POST";
 
       const response = await apiFetch(url, {
@@ -138,10 +142,10 @@ function AdminOffersPage() {
           response.status === 401
             ? "Bitte melde dich erneut an."
             : response.status === 403
-            ? "Du hast keine Berechtigung, Serviceangebote zu verwalten."
-            : response.status === 400
-            ? "Bitte überprüfe die Eingaben."
-            : "Das Serviceangebot konnte nicht gespeichert werden.";
+              ? "Du hast keine Berechtigung, Serviceangebote zu verwalten."
+              : response.status === 400
+                ? "Bitte überprüfe die Eingaben."
+                : "Das Serviceangebot konnte nicht gespeichert werden.";
 
         const apiError = await readApiError(response, fallbackMessage);
         setFieldErrors(apiError.fieldErrors || {});
@@ -154,7 +158,7 @@ function AdminOffersPage() {
       setSuccessMessage(
         wasEdit
           ? "Serviceangebot wurde erfolgreich aktualisiert."
-          : "Serviceangebot wurde erfolgreich angelegt."
+          : "Serviceangebot wurde erfolgreich angelegt.",
       );
     } catch (err) {
       console.error(err);
@@ -165,7 +169,9 @@ function AdminOffersPage() {
   }
 
   async function handleDelete(offerId) {
-    const confirmed = window.confirm("Möchtest du dieses Serviceangebot wirklich löschen?");
+    const confirmed = window.confirm(
+      "Möchtest du dieses Serviceangebot wirklich löschen?",
+    );
     if (!confirmed) {
       return;
     }
@@ -183,10 +189,10 @@ function AdminOffersPage() {
           response.status === 409
             ? "Das Serviceangebot kann nicht gelöscht werden, weil noch Anfragen darauf verweisen."
             : response.status === 401
-            ? "Bitte melde dich erneut an."
-            : response.status === 403
-            ? "Du hast keine Berechtigung, Serviceangebote zu löschen."
-            : "Das Serviceangebot konnte nicht gelöscht werden.";
+              ? "Bitte melde dich erneut an."
+              : response.status === 403
+                ? "Du hast keine Berechtigung, Serviceangebote zu löschen."
+                : "Das Serviceangebot konnte nicht gelöscht werden.";
 
         const apiError = await readApiError(response, fallbackMessage);
         throw new Error(apiError.message);
@@ -229,11 +235,17 @@ function AdminOffersPage() {
     <>
       <section className="form-card" aria-labelledby="offer-form-heading">
         <h2 id="offer-form-heading">
-          {editingOfferId ? "Serviceangebot bearbeiten" : "Neues Serviceangebot anlegen"}
+          {editingOfferId
+            ? "Serviceangebot bearbeiten"
+            : "Neues Serviceangebot anlegen"}
         </h2>
 
         {errorList.length > 0 && (
-          <div className="error-summary" role="alert" aria-labelledby="offer-error-summary-title">
+          <div
+            className="error-summary"
+            role="alert"
+            aria-labelledby="offer-error-summary-title"
+          >
             <p id="offer-error-summary-title">
               <strong>Bitte korrigiere folgende Eingaben:</strong>
             </p>
@@ -255,7 +267,9 @@ function AdminOffersPage() {
               value={formData.title}
               onChange={handleChange}
               aria-invalid={fieldErrors.title ? "true" : "false"}
-              aria-describedby={fieldErrors.title ? "offer-title-error" : undefined}
+              aria-describedby={
+                fieldErrors.title ? "offer-title-error" : undefined
+              }
             />
             {fieldErrors.title && (
               <p id="offer-title-error" className="field-error" role="alert">
@@ -273,7 +287,9 @@ function AdminOffersPage() {
               value={formData.category}
               onChange={handleChange}
               aria-invalid={fieldErrors.category ? "true" : "false"}
-              aria-describedby={fieldErrors.category ? "offer-category-error" : undefined}
+              aria-describedby={
+                fieldErrors.category ? "offer-category-error" : undefined
+              }
             />
             {fieldErrors.category && (
               <p id="offer-category-error" className="field-error" role="alert">
@@ -291,29 +307,45 @@ function AdminOffersPage() {
               value={formData.description}
               onChange={handleChange}
               aria-invalid={fieldErrors.description ? "true" : "false"}
-              aria-describedby={fieldErrors.description ? "offer-description-error" : "offer-description-help"}
+              aria-describedby={
+                fieldErrors.description
+                  ? "offer-description-error"
+                  : "offer-description-help"
+              }
             />
             <p id="offer-description-help" className="field-help">
               Beschreibe das Serviceangebot kurz und verständlich.
             </p>
             {fieldErrors.description && (
-              <p id="offer-description-error" className="field-error" role="alert">
+              <p
+                id="offer-description-error"
+                className="field-error"
+                role="alert"
+              >
                 {fieldErrors.description}
               </p>
             )}
           </div>
 
           <div className="button-row">
-            <button type="submit" className="primary-button" disabled={submitting}>
+            <button
+              type="submit"
+              className="primary-button"
+              disabled={submitting}
+            >
               {submitting
                 ? "Speichern..."
                 : editingOfferId
-                ? "Änderungen speichern"
-                : "Angebot anlegen"}
+                  ? "Änderungen speichern"
+                  : "Angebot anlegen"}
             </button>
 
             {editingOfferId && (
-              <button type="button" className="secondary-button" onClick={resetForm}>
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={resetForm}
+              >
                 Abbrechen
               </button>
             )}
@@ -347,10 +379,18 @@ function AdminOffersPage() {
                 <p>{offer.description}</p>
 
                 <div className="button-row">
-                  <button type="button" className="secondary-button" onClick={() => startEdit(offer)}>
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={() => startEdit(offer)}
+                  >
                     Bearbeiten
                   </button>
-                  <button type="button" className="danger-button" onClick={() => handleDelete(offer.id)}>
+                  <button
+                    type="button"
+                    className="danger-button"
+                    onClick={() => handleDelete(offer.id)}
+                  >
                     Löschen
                   </button>
                 </div>

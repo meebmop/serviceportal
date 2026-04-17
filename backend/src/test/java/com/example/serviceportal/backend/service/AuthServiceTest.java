@@ -105,8 +105,7 @@ class AuthServiceTest {
 
         ResponseStatusException ex = assertThrows(
                 ResponseStatusException.class,
-                () -> authService.register(dto)
-        );
+                () -> authService.register(dto));
 
         assertEquals(HttpStatus.CONFLICT.value(), ex.getStatusCode().value());
         assertEquals("Für diese E-Mail-Adresse existiert bereits ein Benutzer.", ex.getReason());
@@ -134,8 +133,7 @@ class AuthServiceTest {
         verify(loginAttemptService).loginSucceeded("marie@test.de");
         verify(session).setAttribute(
                 eq(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY),
-                any(SecurityContext.class)
-        );
+                any(SecurityContext.class));
 
         assertEquals("Marie", result.getName());
         assertEquals("marie@test.de", result.getEmail());
@@ -153,8 +151,7 @@ class AuthServiceTest {
 
         ResponseStatusException ex = assertThrows(
                 ResponseStatusException.class,
-                () -> authService.login(dto, request)
-        );
+                () -> authService.login(dto, request));
 
         assertEquals(HttpStatus.TOO_MANY_REQUESTS.value(), ex.getStatusCode().value());
         assertTrue(ex.getReason().contains("2 Minute(n)"));
@@ -176,8 +173,7 @@ class AuthServiceTest {
 
         ResponseStatusException ex = assertThrows(
                 ResponseStatusException.class,
-                () -> authService.login(dto, request)
-        );
+                () -> authService.login(dto, request));
 
         assertEquals(HttpStatus.UNAUTHORIZED.value(), ex.getStatusCode().value());
         assertTrue(ex.getReason().contains("Noch 3 Versuche"));
@@ -198,8 +194,7 @@ class AuthServiceTest {
 
         ResponseStatusException ex = assertThrows(
                 ResponseStatusException.class,
-                () -> authService.login(dto, request)
-        );
+                () -> authService.login(dto, request));
 
         assertEquals(HttpStatus.TOO_MANY_REQUESTS.value(), ex.getStatusCode().value());
         assertTrue(ex.getReason().contains("45 Sekunde(n)"));
@@ -224,8 +219,7 @@ class AuthServiceTest {
 
         ResponseStatusException ex = assertThrows(
                 ResponseStatusException.class,
-                () -> authService.getCurrentUser(authentication)
-        );
+                () -> authService.getCurrentUser(authentication));
 
         assertEquals(HttpStatus.UNAUTHORIZED.value(), ex.getStatusCode().value());
         assertEquals("Nicht angemeldet", ex.getReason());

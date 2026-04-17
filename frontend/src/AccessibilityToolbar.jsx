@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 
 function AccessibilityToolbar() {
   const [fontScale, setFontScale] = useState(
-    localStorage.getItem("fontScale") || "1"
+    localStorage.getItem("fontScale") || "1",
   );
+
   const [highContrast, setHighContrast] = useState(
-    localStorage.getItem("highContrast") === "true"
+    localStorage.getItem("highContrast") === "true",
   );
 
   useEffect(() => {

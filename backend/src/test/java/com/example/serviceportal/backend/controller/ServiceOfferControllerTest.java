@@ -28,8 +28,7 @@ class ServiceOfferControllerTest {
     void getAllOffers_shouldDelegateToService() {
         List<ServiceOfferResponseDto> expected = List.of(
                 new ServiceOfferResponseDto(1L, "IT-Support", "Beschreibung 1", "Support"),
-                new ServiceOfferResponseDto(2L, "Beratung", "Beschreibung 2", "Beratung")
-        );
+                new ServiceOfferResponseDto(2L, "Beratung", "Beschreibung 2", "Beratung"));
 
         when(serviceOfferService.getAllOffers()).thenReturn(expected);
 
@@ -48,8 +47,7 @@ class ServiceOfferControllerTest {
         dto.setDescription("Beschreibung");
         dto.setCategory("Support");
 
-        ServiceOfferResponseDto expected =
-                new ServiceOfferResponseDto(1L, "IT-Support", "Beschreibung", "Support");
+        ServiceOfferResponseDto expected = new ServiceOfferResponseDto(1L, "IT-Support", "Beschreibung", "Support");
 
         when(serviceOfferService.createOffer(dto)).thenReturn(expected);
 
@@ -68,8 +66,8 @@ class ServiceOfferControllerTest {
         dto.setDescription("Neue Beschreibung");
         dto.setCategory("Neue Kategorie");
 
-        ServiceOfferResponseDto expected =
-                new ServiceOfferResponseDto(1L, "Neuer Titel", "Neue Beschreibung", "Neue Kategorie");
+        ServiceOfferResponseDto expected = new ServiceOfferResponseDto(1L, "Neuer Titel", "Neue Beschreibung",
+                "Neue Kategorie");
 
         when(serviceOfferService.updateOffer(1L, dto)).thenReturn(expected);
 

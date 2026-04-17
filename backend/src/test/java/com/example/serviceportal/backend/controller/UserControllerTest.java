@@ -31,8 +31,7 @@ class UserControllerTest {
     void getAllUsers_shouldDelegateToService() {
         List<UserResponseDto> expected = List.of(
                 new UserResponseDto(1L, "Admin", "admin@test.de", "ADMIN"),
-                new UserResponseDto(2L, "User", "user@test.de", "USER")
-        );
+                new UserResponseDto(2L, "User", "user@test.de", "USER"));
 
         when(userService.getAllUsers()).thenReturn(expected);
 

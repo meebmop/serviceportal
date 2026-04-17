@@ -106,8 +106,7 @@ class ServiceOfferServiceTest {
 
         ResponseStatusException ex = assertThrows(
                 ResponseStatusException.class,
-                () -> serviceOfferService.updateOffer(99L, dto)
-        );
+                () -> serviceOfferService.updateOffer(99L, dto));
 
         assertEquals(404, ex.getStatusCode().value());
         assertEquals("Serviceangebot nicht gefunden", ex.getReason());
@@ -129,8 +128,7 @@ class ServiceOfferServiceTest {
 
         ResponseStatusException ex = assertThrows(
                 ResponseStatusException.class,
-                () -> serviceOfferService.deleteOffer(1L)
-        );
+                () -> serviceOfferService.deleteOffer(1L));
 
         assertEquals(404, ex.getStatusCode().value());
         assertEquals("Serviceangebot nicht gefunden", ex.getReason());
@@ -144,14 +142,12 @@ class ServiceOfferServiceTest {
 
         ResponseStatusException ex = assertThrows(
                 ResponseStatusException.class,
-                () -> serviceOfferService.deleteOffer(1L)
-        );
+                () -> serviceOfferService.deleteOffer(1L));
 
         assertEquals(409, ex.getStatusCode().value());
         assertEquals(
                 "Das Serviceangebot kann nicht gelöscht werden, weil noch Anfragen darauf verweisen.",
-                ex.getReason()
-        );
+                ex.getReason());
         verify(serviceOfferRepository, never()).deleteById(anyLong());
     }
 

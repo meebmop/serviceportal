@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate, useOutletContext, useSearchParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useOutletContext,
+  useSearchParams,
+} from "react-router-dom";
 import { apiFetch, readApiError } from "../api";
 import { REQUEST_PRIORITIES } from "../constants/requestOptions";
 
@@ -15,7 +20,6 @@ function RequestPage() {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const { currentUser } = useOutletContext();
-
   const [offers, setOffers] = useState([]);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [fieldErrors, setFieldErrors] = useState({});
@@ -30,7 +34,9 @@ function RequestPage() {
 
   useEffect(() => {
     if (!currentUser) {
-      navigate(`/login?redirect=${encodeURIComponent(redirectTarget)}`, { replace: true });
+      navigate(`/login?redirect=${encodeURIComponent(redirectTarget)}`, {
+        replace: true,
+      });
     }
   }, [currentUser, navigate, redirectTarget]);
 
@@ -50,13 +56,18 @@ function RequestPage() {
         setOffers(data);
 
         const requestedOfferId = searchParams.get("offerId");
-        const hasRequestedOffer = requestedOfferId && data.some((offer) => String(offer.id) === requestedOfferId);
+        const hasRequestedOffer =
+          requestedOfferId &&
+          data.some((offer) => String(offer.id) === requestedOfferId);
 
         setFormData((prev) => ({
           ...prev,
           serviceOfferId: hasRequestedOffer
             ? requestedOfferId
-            : prev.serviceOfferId && data.some((offer) => String(offer.id) === String(prev.serviceOfferId))
+            : prev.serviceOfferId &&
+                data.some(
+                  (offer) => String(offer.id) === String(prev.serviceOfferId),
+                )
               ? prev.serviceOfferId
               : data.length > 0
                 ? String(data[0].id)
@@ -64,6 +75,7 @@ function RequestPage() {
         }));
       } catch (error) {
         console.error(error);
+
         setPageError(error.message || "Fehler beim Laden der Serviceangebote.");
       } finally {
         setIsLoadingOffers(false);
@@ -102,9 +114,11 @@ function RequestPage() {
     if (!formData.subject.trim()) {
       nextFieldErrors.subject = "Bitte gib einen Betreff ein.";
     } else if (formData.subject.trim().length < 3) {
-      nextFieldErrors.subject = "Der Betreff muss mindestens 3 Zeichen lang sein.";
+      nextFieldErrors.subject =
+        "Der Betreff muss mindestens 3 Zeichen lang sein.";
     } else if (formData.subject.trim().length > 100) {
-      nextFieldErrors.subject = "Der Betreff darf maximal 100 Zeichen lang sein.";
+      nextFieldErrors.subject =
+        "Der Betreff darf maximal 100 Zeichen lang sein.";
     }
 
     if (!REQUEST_PRIORITIES.includes(formData.priority)) {
@@ -114,9 +128,11 @@ function RequestPage() {
     if (!formData.message.trim()) {
       nextFieldErrors.message = "Bitte beschreibe dein Anliegen.";
     } else if (formData.message.trim().length < 10) {
-      nextFieldErrors.message = "Die Nachricht muss mindestens 10 Zeichen lang sein.";
+      nextFieldErrors.message =
+        "Die Nachricht muss mindestens 10 Zeichen lang sein.";
     } else if (formData.message.trim().length > 1000) {
-      nextFieldErrors.message = "Die Nachricht darf maximal 1000 Zeichen lang sein.";
+      nextFieldErrors.message =
+        "Die Nachricht darf maximal 1000 Zeichen lang sein.";
     }
 
     setFieldErrors(nextFieldErrors);
@@ -147,9 +163,12 @@ function RequestPage() {
       });
 
       if (!response.ok) {
-        const apiError = await readApiError(response, "Die Serviceanfrage konnte nicht gesendet werden.");
-
+        const apiError = await readApiError(
+          response,
+          "Die Serviceanfrage konnte nicht gesendet werden.",
+        );
         setFieldErrors(apiError.fieldErrors || {});
+
         throw new Error(apiError.message);
       }
 
@@ -161,19 +180,21 @@ function RequestPage() {
         serviceOfferId: prev.serviceOfferId,
       }));
 
-navigate("/confirmation", {
-  replace: true,
-  state: {
-    id: createdRequest.id,
-    subject: createdRequest.subject,
-    category: createdRequest.category,
-    status: createdRequest.status,
-    createdAt: createdRequest.createdAt,
-  },
-});
+      navigate("/confirmation", {
+        replace: true,
+        state: {
+          id: createdRequest.id,
+          subject: createdRequest.subject,
+          category: createdRequest.category,
+          status: createdRequest.status,
+          createdAt: createdRequest.createdAt,
+        },
+      });
     } catch (error) {
       console.error(error);
-      setPageError(error.message || "Die Serviceanfrage konnte nicht gesendet werden.");
+      setPageError(
+        error.message || "Die Serviceanfrage konnte nicht gesendet werden.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -187,7 +208,8 @@ navigate("/confirmation", {
     <section className="content-card" aria-labelledby="request-page-heading">
       <h1 id="request-page-heading">Serviceanfrage einreichen</h1>
       <p>
-        Reiche hier dein Anliegen online ein. Alle Pflichtfelder sind entsprechend gekennzeichnet.
+        Reiche hier dein Anliegen online ein. Alle Pflichtfelder sind
+        entsprechend gekennzeichnet.
       </p>
 
       {isLoadingOffers ? (
@@ -214,7 +236,11 @@ navigate("/confirmation", {
               value={formData.serviceOfferId}
               onChange={handleChange}
               aria-invalid={fieldErrors.serviceOfferId ? "true" : "false"}
-              aria-describedby={fieldErrors.serviceOfferId ? "serviceOfferId-error" : "serviceOfferId-hint"}
+              aria-describedby={
+                fieldErrors.serviceOfferId
+                  ? "serviceOfferId-error"
+                  : "serviceOfferId-hint"
+              }
               disabled={isSubmitting}
             >
               {offers.map((offer) => (
@@ -223,7 +249,10 @@ navigate("/confirmation", {
                 </option>
               ))}
             </select>
-            <small id="serviceOfferId-hint">Wähle das passende Angebot für dein Anliegen aus.</small>
+
+            <small id="serviceOfferId-hint">
+              Wähle das passende Angebot für dein Anliegen aus.
+            </small>
             {fieldErrors.serviceOfferId && (
               <p id="serviceOfferId-error" className="field-error" role="alert">
                 {fieldErrors.serviceOfferId}
@@ -233,6 +262,7 @@ navigate("/confirmation", {
 
           <div className="form-group">
             <label htmlFor="subject">Betreff *</label>
+
             <input
               id="subject"
               name="subject"
@@ -241,10 +271,15 @@ navigate("/confirmation", {
               onChange={handleChange}
               maxLength={100}
               aria-invalid={fieldErrors.subject ? "true" : "false"}
-              aria-describedby={fieldErrors.subject ? "subject-error" : "subject-hint"}
+              aria-describedby={
+                fieldErrors.subject ? "subject-error" : "subject-hint"
+              }
               disabled={isSubmitting}
             />
-            <small id="subject-hint">Fasse dein Anliegen kurz und eindeutig zusammen.</small>
+
+            <small id="subject-hint">
+              Fasse dein Anliegen kurz und eindeutig zusammen.
+            </small>
             {fieldErrors.subject && (
               <p id="subject-error" className="field-error" role="alert">
                 {fieldErrors.subject}
@@ -254,13 +289,16 @@ navigate("/confirmation", {
 
           <div className="form-group">
             <label htmlFor="priority">Priorität *</label>
+
             <select
               id="priority"
               name="priority"
               value={formData.priority}
               onChange={handleChange}
               aria-invalid={fieldErrors.priority ? "true" : "false"}
-              aria-describedby={fieldErrors.priority ? "priority-error" : "priority-hint"}
+              aria-describedby={
+                fieldErrors.priority ? "priority-error" : "priority-hint"
+              }
               disabled={isSubmitting}
             >
               {REQUEST_PRIORITIES.map((priority) => (
@@ -269,7 +307,10 @@ navigate("/confirmation", {
                 </option>
               ))}
             </select>
-            <small id="priority-hint">Wähle die Dringlichkeit deiner Anfrage aus.</small>
+
+            <small id="priority-hint">
+              Wähle die Dringlichkeit deiner Anfrage aus.
+            </small>
             {fieldErrors.priority && (
               <p id="priority-error" className="field-error" role="alert">
                 {fieldErrors.priority}
@@ -287,10 +328,15 @@ navigate("/confirmation", {
               onChange={handleChange}
               maxLength={1000}
               aria-invalid={fieldErrors.message ? "true" : "false"}
-              aria-describedby={fieldErrors.message ? "message-error" : "message-hint"}
+              aria-describedby={
+                fieldErrors.message ? "message-error" : "message-hint"
+              }
               disabled={isSubmitting}
             />
-            <small id="message-hint">Beschreibe dein Anliegen möglichst konkret.</small>
+
+            <small id="message-hint">
+              Beschreibe dein Anliegen möglichst konkret.
+            </small>
             {fieldErrors.message && (
               <p id="message-error" className="field-error" role="alert">
                 {fieldErrors.message}
@@ -299,10 +345,14 @@ navigate("/confirmation", {
           </div>
 
           <div className="button-row">
-  <button type="submit" className="primary-button" disabled={isSubmitting}>
-    {isSubmitting ? "Anfrage wird gesendet..." : "Anfrage absenden"}
-  </button>
-</div>
+            <button
+              type="submit"
+              className="primary-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Anfrage wird gesendet..." : "Anfrage absenden"}
+            </button>
+          </div>
         </form>
       )}
     </section>

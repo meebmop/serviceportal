@@ -27,7 +27,7 @@ function AdminOverviewPage() {
         if (!offersResponse.ok) {
           const apiError = await readApiError(
             offersResponse,
-            "Serviceangebote konnten nicht geladen werden."
+            "Serviceangebote konnten nicht geladen werden.",
           );
           throw new Error(apiError.message);
         }
@@ -35,7 +35,7 @@ function AdminOverviewPage() {
         if (!requestsResponse.ok) {
           const apiError = await readApiError(
             requestsResponse,
-            "Anfragen konnten nicht geladen werden."
+            "Anfragen konnten nicht geladen werden.",
           );
           throw new Error(apiError.message);
         }
@@ -43,7 +43,7 @@ function AdminOverviewPage() {
         if (!usersResponse.ok) {
           const apiError = await readApiError(
             usersResponse,
-            "Benutzer konnten nicht geladen werden."
+            "Benutzer konnten nicht geladen werden.",
           );
           throw new Error(apiError.message);
         }

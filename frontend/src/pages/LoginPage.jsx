@@ -1,5 +1,10 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate, useOutletContext, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useOutletContext,
+  useSearchParams,
+} from "react-router-dom";
 import { apiFetch, readApiError } from "../api";
 
 function LoginPage() {
@@ -124,7 +129,11 @@ function LoginPage() {
       <p>Melde dich mit deiner E-Mail-Adresse und deinem Passwort an.</p>
 
       {errorList.length > 0 && (
-        <div className="error-summary" role="alert" aria-labelledby="login-error-summary-title">
+        <div
+          className="error-summary"
+          role="alert"
+          aria-labelledby="login-error-summary-title"
+        >
           <p id="login-error-summary-title">
             <strong>Bitte korrigiere folgende Eingaben:</strong>
           </p>
@@ -147,7 +156,9 @@ function LoginPage() {
             onChange={handleChange}
             autoComplete="username"
             aria-invalid={fieldErrors.email ? "true" : "false"}
-            aria-describedby={fieldErrors.email ? "login-email-error" : undefined}
+            aria-describedby={
+              fieldErrors.email ? "login-email-error" : undefined
+            }
           />
           {fieldErrors.email && (
             <p id="login-email-error" className="field-error" role="alert">
@@ -166,7 +177,9 @@ function LoginPage() {
             onChange={handleChange}
             autoComplete="current-password"
             aria-invalid={fieldErrors.password ? "true" : "false"}
-            aria-describedby={fieldErrors.password ? "login-password-error" : undefined}
+            aria-describedby={
+              fieldErrors.password ? "login-password-error" : undefined
+            }
           />
           {fieldErrors.password && (
             <p id="login-password-error" className="field-error" role="alert">

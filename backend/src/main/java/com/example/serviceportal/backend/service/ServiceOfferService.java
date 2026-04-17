@@ -20,8 +20,7 @@ public class ServiceOfferService {
 
     public ServiceOfferService(
             ServiceOfferRepository serviceOfferRepository,
-            ServiceRequestRepository serviceRequestRepository
-    ) {
+            ServiceRequestRepository serviceRequestRepository) {
         this.serviceOfferRepository = serviceOfferRepository;
         this.serviceRequestRepository = serviceRequestRepository;
     }
@@ -35,11 +34,13 @@ public class ServiceOfferService {
 
     public ServiceOfferResponseDto createOffer(ServiceOfferCreateDto createDto) {
         ServiceOffer serviceOffer = new ServiceOffer();
+
         serviceOffer.setTitle(createDto.getTitle());
         serviceOffer.setDescription(createDto.getDescription());
         serviceOffer.setCategory(createDto.getCategory());
 
         ServiceOffer savedOffer = serviceOfferRepository.save(serviceOffer);
+
         return mapToDto(savedOffer);
     }
 
@@ -52,6 +53,7 @@ public class ServiceOfferService {
         existingOffer.setCategory(updateDto.getCategory());
 
         ServiceOffer savedOffer = serviceOfferRepository.save(existingOffer);
+
         return mapToDto(savedOffer);
     }
 
@@ -63,8 +65,7 @@ public class ServiceOfferService {
         if (serviceRequestRepository.existsByServiceOffer_Id(id)) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
-                    "Das Serviceangebot kann nicht gelöscht werden, weil noch Anfragen darauf verweisen."
-            );
+                    "Das Serviceangebot kann nicht gelöscht werden, weil noch Anfragen darauf verweisen.");
         }
 
         serviceOfferRepository.deleteById(id);
@@ -75,7 +76,6 @@ public class ServiceOfferService {
                 serviceOffer.getId(),
                 serviceOffer.getTitle(),
                 serviceOffer.getDescription(),
-                serviceOffer.getCategory()
-        );
+                serviceOffer.getCategory());
     }
 }

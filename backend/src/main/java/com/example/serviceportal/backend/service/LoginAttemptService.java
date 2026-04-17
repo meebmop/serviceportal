@@ -18,8 +18,7 @@ public class LoginAttemptService {
 
     public LoginAttemptService(
             @Value("${security.login.max-attempts:5}") int maxAttempts,
-            @Value("${security.login.lock-duration-seconds:900}") long lockDurationSeconds
-    ) {
+            @Value("${security.login.lock-duration-seconds:900}") long lockDurationSeconds) {
         this.maxAttempts = maxAttempts;
         this.lockDurationSeconds = lockDurationSeconds;
     }
@@ -39,6 +38,7 @@ public class LoginAttemptService {
         if (!Instant.now().isBefore(lockEnd)) {
             lockedUntil.remove(key);
             failedAttempts.remove(key);
+
             return false;
         }
 
@@ -51,6 +51,7 @@ public class LoginAttemptService {
         }
 
         String key = normalizeKey(email);
+
         failedAttempts.remove(key);
         lockedUntil.remove(key);
     }
@@ -77,6 +78,7 @@ public class LoginAttemptService {
 
         String key = normalizeKey(email);
         int attempts = failedAttempts.getOrDefault(key, 0);
+
         return Math.max(0, maxAttempts - attempts);
     }
 
@@ -93,6 +95,7 @@ public class LoginAttemptService {
         }
 
         long remaining = lockEnd.getEpochSecond() - Instant.now().getEpochSecond();
+
         return Math.max(0, remaining);
     }
 

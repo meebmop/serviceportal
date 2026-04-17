@@ -59,10 +59,10 @@ public class SecurityConfig {
     @Bean
     public DaoAuthenticationProvider authenticationProvider(
             UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder
-    ) {
+            PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
+
         return provider;
     }
 
@@ -70,8 +70,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             DaoAuthenticationProvider authenticationProvider,
-            Environment environment
-    ) throws Exception {
+            Environment environment) throws Exception {
 
         boolean devProfileActive = environment.acceptsProfiles(Profiles.of("dev"));
 
@@ -80,11 +79,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authenticationProvider(authenticationProvider)
                 .securityContext(context -> context
-                        .securityContextRepository(new HttpSessionSecurityContextRepository())
-                )
+                        .securityContextRepository(new HttpSessionSecurityContextRepository()))
                 .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(authorize -> {
                     if (devProfileActive) {
                         authorize.requestMatchers("/h2-console/**").permitAll();
@@ -127,14 +124,14 @@ public class SecurityConfig {
             config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             config.setAllowedHeaders(List.of("*"));
             config.setAllowCredentials(true);
+
             return config;
         };
     }
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration
-    ) throws Exception {
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }

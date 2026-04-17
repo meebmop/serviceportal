@@ -39,13 +39,13 @@ function RegisterPage() {
   function validateForm() {
     const errors = {};
 
-const trimmedName = formData.name.trim();
+    const trimmedName = formData.name.trim();
 
-if (!trimmedName) {
-  errors.name = "Bitte gib deinen Namen ein.";
-} else if (trimmedName.length < 2 || trimmedName.length > 100) {
-  errors.name = "Der Name muss zwischen 2 und 100 Zeichen lang sein.";
-}
+    if (!trimmedName) {
+      errors.name = "Bitte gib deinen Namen ein.";
+    } else if (trimmedName.length < 2 || trimmedName.length > 100) {
+      errors.name = "Der Name muss zwischen 2 und 100 Zeichen lang sein.";
+    }
 
     if (!formData.email.trim()) {
       errors.email = "Bitte gib eine E-Mail-Adresse ein.";
@@ -56,7 +56,9 @@ if (!trimmedName) {
     if (!formData.password) {
       errors.password = "Bitte gib ein Passwort ein.";
     } else if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/.test(formData.password)
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/.test(
+        formData.password,
+      )
     ) {
       errors.password =
         "Das Passwort muss mindestens 8 Zeichen lang sein und Großbuchstaben, Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
@@ -98,7 +100,7 @@ if (!trimmedName) {
       if (!response.ok) {
         const apiError = await readApiError(
           response,
-          "Die Registrierung konnte nicht abgeschlossen werden."
+          "Die Registrierung konnte nicht abgeschlossen werden.",
         );
 
         setFieldErrors(apiError.fieldErrors || {});
@@ -109,7 +111,7 @@ if (!trimmedName) {
     } catch (error) {
       console.error(error);
       setSubmitError(
-        error.message || "Die Registrierung konnte nicht abgeschlossen werden."
+        error.message || "Die Registrierung konnte nicht abgeschlossen werden.",
       );
     } finally {
       setLoading(false);
@@ -133,7 +135,11 @@ if (!trimmedName) {
       <p>Erstelle ein Benutzerkonto für das Serviceportal.</p>
 
       {errorList.length > 0 && (
-        <div className="error-summary" role="alert" aria-labelledby="register-error-summary-title">
+        <div
+          className="error-summary"
+          role="alert"
+          aria-labelledby="register-error-summary-title"
+        >
           <p id="register-error-summary-title">
             <strong>Bitte korrigiere folgende Eingaben:</strong>
           </p>
@@ -156,7 +162,9 @@ if (!trimmedName) {
             onChange={handleChange}
             autoComplete="name"
             aria-invalid={fieldErrors.name ? "true" : "false"}
-            aria-describedby={fieldErrors.name ? "register-name-error" : undefined}
+            aria-describedby={
+              fieldErrors.name ? "register-name-error" : undefined
+            }
           />
           {fieldErrors.name && (
             <p id="register-name-error" className="field-error" role="alert">
@@ -175,7 +183,9 @@ if (!trimmedName) {
             onChange={handleChange}
             autoComplete="email"
             aria-invalid={fieldErrors.email ? "true" : "false"}
-            aria-describedby={fieldErrors.email ? "register-email-error" : undefined}
+            aria-describedby={
+              fieldErrors.email ? "register-email-error" : undefined
+            }
           />
           {fieldErrors.email && (
             <p id="register-email-error" className="field-error" role="alert">
@@ -194,13 +204,22 @@ if (!trimmedName) {
             onChange={handleChange}
             autoComplete="new-password"
             aria-invalid={fieldErrors.password ? "true" : "false"}
-            aria-describedby={fieldErrors.password ? "register-password-error" : "register-password-help"}
+            aria-describedby={
+              fieldErrors.password
+                ? "register-password-error"
+                : "register-password-help"
+            }
           />
           <p id="register-password-help" className="field-help">
-            Mindestens 8 Zeichen sowie Großbuchstaben, Kleinbuchstaben, Zahl und Sonderzeichen.
+            Mindestens 8 Zeichen sowie Großbuchstaben, Kleinbuchstaben, Zahl und
+            Sonderzeichen.
           </p>
           {fieldErrors.password && (
-            <p id="register-password-error" className="field-error" role="alert">
+            <p
+              id="register-password-error"
+              className="field-error"
+              role="alert"
+            >
               {fieldErrors.password}
             </p>
           )}
@@ -216,10 +235,18 @@ if (!trimmedName) {
             onChange={handleChange}
             autoComplete="new-password"
             aria-invalid={fieldErrors.confirmPassword ? "true" : "false"}
-            aria-describedby={fieldErrors.confirmPassword ? "register-confirmPassword-error" : undefined}
+            aria-describedby={
+              fieldErrors.confirmPassword
+                ? "register-confirmPassword-error"
+                : undefined
+            }
           />
           {fieldErrors.confirmPassword && (
-            <p id="register-confirmPassword-error" className="field-error" role="alert">
+            <p
+              id="register-confirmPassword-error"
+              className="field-error"
+              role="alert"
+            >
               {fieldErrors.confirmPassword}
             </p>
           )}

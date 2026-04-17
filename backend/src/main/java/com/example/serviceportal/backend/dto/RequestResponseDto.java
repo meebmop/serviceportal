@@ -31,8 +31,7 @@ public class RequestResponseDto {
             String adminComment,
             String updatedBy,
             LocalDateTime createdAt,
-            LocalDateTime updatedAt
-    ) {
+            LocalDateTime updatedAt) {
         this.id = id;
         this.serviceOfferId = serviceOfferId;
         this.userId = userId;

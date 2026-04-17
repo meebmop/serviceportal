@@ -1,0 +1,49 @@
+# =========================
+# Allgemein
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.swo
+
+# IDE / Editor
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# =========================
+# Frontend (Vite / React)
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+frontend/coverage/
+
+# Env-Dateien
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# =========================
+# Backend (Spring Boot / Maven)
+# =========================
+backend/target/
+backend/data/
+backend/*.mv.db
+backend/*.trace.db
+backend/*.h2.db
+backend/logs/
+backend/coverage/
+backend/.surefire-*
+backend/.flattened-pom.xml
+
+# Maven Wrapper Backup / OS
+**/.mvn/wrapper/maven-wrapper.jar.backup

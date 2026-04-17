@@ -179,30 +179,32 @@ function Layout() {
       <div className="page">
         <header className="header header-clean">
           <div className="header-top-row">
-<div className="header-brand">
-  <Link
-    to={role === "ADMIN" ? "/admin" : "/"}
-    className="brand-link"
-    aria-label={role === "ADMIN" ? "Zur Admin-Übersicht" : "Zur Startseite"}
-  >
-    <div className="brand-logo">
-      <img
-        src={serviceportalLogo}
-        alt="Serviceportal Logo"
-        className="brand-logo-image"
-        aria-hidden="true"
-      />
-    </div>
+            <div className="header-brand">
+              <Link
+                to={role === "ADMIN" ? "/admin" : "/"}
+                className="brand-link"
+                aria-label={
+                  role === "ADMIN" ? "Zur Admin-Übersicht" : "Zur Startseite"
+                }
+              >
+                <div className="brand-logo">
+                  <img
+                    src={serviceportalLogo}
+                    alt="Serviceportal Logo"
+                    className="brand-logo-image"
+                    aria-hidden="true"
+                  />
+                </div>
 
-    <div className="brand-block">
-      <p className="brand-kicker">Digitaler Bürgerservice</p>
-      <h1>Barrierefreies Serviceportal</h1>
-      <p className="header-text">
-        Online-Anfragen einfach und zugänglich einreichen
-      </p>
-    </div>
-  </Link>
-</div>
+                <div className="brand-block">
+                  <p className="brand-kicker">Digitaler Bürgerservice</p>
+                  <h1>Barrierefreies Serviceportal</h1>
+                  <p className="header-text">
+                    Online-Anfragen einfach und zugänglich einreichen
+                  </p>
+                </div>
+              </Link>
+            </div>
 
             <div className="header-actions">
               <div className="account-menu" ref={accountMenuRef}>
@@ -394,7 +396,12 @@ function Layout() {
 
         <main id="main-content" className="main-content" tabIndex="-1">
           <Outlet
-            context={{ role, currentUser, authLoading, reloadUser: loadCurrentUser }}
+            context={{
+              role,
+              currentUser,
+              authLoading,
+              reloadUser: loadCurrentUser,
+            }}
           />
         </main>
       </div>

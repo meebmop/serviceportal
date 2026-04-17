@@ -34,8 +34,7 @@ public class AuthService {
             AuthenticationManager authenticationManager,
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
-            LoginAttemptService loginAttemptService
-    ) {
+            LoginAttemptService loginAttemptService) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -48,17 +47,18 @@ public class AuthService {
         if (userRepository.findByEmailIgnoreCase(normalizedEmail).isPresent()) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
-                    "Für diese E-Mail-Adresse existiert bereits ein Benutzer."
-            );
+                    "Für diese E-Mail-Adresse existiert bereits ein Benutzer.");
         }
 
         User user = new User();
+
         user.setName(registerRequest.getName());
         user.setEmail(normalizedEmail);
         user.setRole(UserRole.USER);
         user.setPasswordHash(passwordEncoder.encode(registerRequest.getPassword()));
 
         User savedUser = userRepository.save(user);
+
         return mapToLoginResponse(savedUser);
     }
 
@@ -70,19 +70,18 @@ public class AuthService {
 
             throw new ResponseStatusException(
                     HttpStatus.TOO_MANY_REQUESTS,
-                    buildLockedMessage(remainingSeconds)
-            );
+                    buildLockedMessage(remainingSeconds));
         }
 
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(normalizedEmail, loginRequest.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(normalizedEmail, loginRequest.getPassword()));
 
             storeAuthenticationInSession(authentication, request);
             loginAttemptService.loginSucceeded(normalizedEmail);
 
             User user = findUserByEmailOrUnauthorized(normalizedEmail);
+
             return mapToLoginResponse(user);
         } catch (BadCredentialsException ex) {
             int attempts = loginAttemptService.loginFailed(normalizedEmail);
@@ -92,22 +91,21 @@ public class AuthService {
 
                 throw new ResponseStatusException(
                         HttpStatus.TOO_MANY_REQUESTS,
-                        buildLockedMessage(remainingSeconds)
-                );
+                        buildLockedMessage(remainingSeconds));
             }
 
             int remainingAttempts = loginAttemptService.getRemainingAttempts(normalizedEmail);
 
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED,
-                    buildInvalidCredentialsMessage(remainingAttempts)
-            );
+                    buildInvalidCredentialsMessage(remainingAttempts));
         }
     }
 
     public LoginResponseDto getCurrentUser(Authentication authentication) {
         String userEmail = extractAuthenticatedEmail(authentication);
         User user = findUserByEmailOrUnauthorized(userEmail);
+
         return mapToLoginResponse(user);
     }
 
@@ -120,9 +118,11 @@ public class AuthService {
         }
 
         Cookie cookie = new Cookie("JSESSIONID", null);
+
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setMaxAge(0);
+
         response.addCookie(cookie);
     }
 
@@ -132,10 +132,10 @@ public class AuthService {
         SecurityContextHolder.setContext(context);
 
         HttpSession session = request.getSession(true);
+
         session.setAttribute(
                 HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-                context
-        );
+                context);
     }
 
     private String extractAuthenticatedEmail(Authentication authentication) {
@@ -171,6 +171,7 @@ public class AuthService {
     private String buildLockedMessage(long remainingSeconds) {
         if (remainingSeconds >= 60) {
             long minutes = (long) Math.ceil(remainingSeconds / 60.0);
+
             return "Zu viele fehlgeschlagene Anmeldeversuche. Bitte versuche es in "
                     + minutes
                     + " Minute(n) erneut.";
@@ -186,7 +187,6 @@ public class AuthService {
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getRole().toString()
-        );
+                user.getRole().toString());
     }
 }

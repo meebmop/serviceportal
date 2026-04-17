@@ -9,12 +9,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(
-        name = "app_user",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "uk_app_user_email", columnNames = "email")
-        }
-)
+@Table(name = "app_user", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_app_user_email", columnNames = "email")
+})
 public class User {
 
     @Id

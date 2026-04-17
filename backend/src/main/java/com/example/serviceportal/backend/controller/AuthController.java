@@ -30,8 +30,7 @@ public class AuthController {
     @PostMapping("/login")
     public LoginResponseDto login(
             @Valid @RequestBody LoginRequestDto loginRequest,
-            HttpServletRequest request
-    ) {
+            HttpServletRequest request) {
         return authService.login(loginRequest, request);
     }
 

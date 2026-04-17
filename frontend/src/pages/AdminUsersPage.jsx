@@ -20,7 +20,7 @@ function AdminUsersPage() {
       if (!response.ok) {
         const apiError = await readApiError(
           response,
-          "Benutzer konnten nicht geladen werden."
+          "Benutzer konnten nicht geladen werden.",
         );
         throw new Error(apiError.message);
       }
@@ -55,10 +55,10 @@ function AdminUsersPage() {
           response.status === 401
             ? "Bitte melde dich erneut an."
             : response.status === 403
-            ? "Du hast keine Berechtigung, Benutzerrollen zu ändern."
-            : response.status === 400
-            ? "Die ausgewählte Rolle ist ungültig oder darf nicht gesetzt werden."
-            : "Die Benutzerrolle konnte nicht aktualisiert werden.";
+              ? "Du hast keine Berechtigung, Benutzerrollen zu ändern."
+              : response.status === 400
+                ? "Die ausgewählte Rolle ist ungültig oder darf nicht gesetzt werden."
+                : "Die Benutzerrolle konnte nicht aktualisiert werden.";
 
         const apiError = await readApiError(response, fallbackMessage);
         throw new Error(apiError.message);
@@ -67,7 +67,7 @@ function AdminUsersPage() {
       const updatedUser = await response.json();
 
       setUsers((prev) =>
-        prev.map((item) => (item.id === user.id ? updatedUser : item))
+        prev.map((item) => (item.id === user.id ? updatedUser : item)),
       );
 
       setSuccessMessage(`Rolle von ${updatedUser.name} wurde aktualisiert.`);
@@ -81,7 +81,7 @@ function AdminUsersPage() {
 
   async function handleDeleteUser(user) {
     const confirmed = window.confirm(
-      `Möchtest du den Benutzer ${user.name} wirklich löschen?`
+      `Möchtest du den Benutzer ${user.name} wirklich löschen?`,
     );
 
     if (!confirmed) {
@@ -102,12 +102,12 @@ function AdminUsersPage() {
           response.status === 401
             ? "Bitte melde dich erneut an."
             : response.status === 403
-            ? "Du hast keine Berechtigung, Benutzer zu löschen."
-            : response.status === 400
-            ? "Dieser Benutzer kann nicht gelöscht werden."
-            : response.status === 404
-            ? "Der Benutzer wurde nicht gefunden."
-            : "Der Benutzer konnte nicht gelöscht werden.";
+              ? "Du hast keine Berechtigung, Benutzer zu löschen."
+              : response.status === 400
+                ? "Dieser Benutzer kann nicht gelöscht werden."
+                : response.status === 404
+                  ? "Der Benutzer wurde nicht gefunden."
+                  : "Der Benutzer konnte nicht gelöscht werden.";
 
         const apiError = await readApiError(response, fallbackMessage);
         throw new Error(apiError.message);
@@ -181,7 +181,10 @@ function AdminUsersPage() {
                     </td>
                     <td>{user.email}</td>
                     <td>
-                      <label htmlFor={`role-select-${user.id}`} className="sr-only">
+                      <label
+                        htmlFor={`role-select-${user.id}`}
+                        className="sr-only"
+                      >
                         Rolle für {user.name} ändern
                       </label>
                       <select

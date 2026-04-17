@@ -18,10 +18,7 @@ public class RegisterRequestDto {
 
     @NotBlank(message = "Das Passwort darf nicht leer sein.")
     @Size(min = 8, max = 100, message = "Das Passwort muss zwischen 8 und 100 Zeichen lang sein.")
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d]).+$",
-            message = "Das Passwort muss Großbuchstaben, Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
-    )
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d]).+$", message = "Das Passwort muss Großbuchstaben, Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.")
     private String password;
 
     public RegisterRequestDto() {

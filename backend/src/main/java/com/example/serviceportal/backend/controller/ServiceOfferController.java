@@ -37,8 +37,7 @@ public class ServiceOfferController {
     @PreAuthorize("hasRole('ADMIN')")
     public ServiceOfferResponseDto updateOffer(
             @PathVariable Long id,
-            @Valid @RequestBody ServiceOfferUpdateDto updateDto
-    ) {
+            @Valid @RequestBody ServiceOfferUpdateDto updateDto) {
         return serviceOfferService.updateOffer(id, updateDto);
     }
 

@@ -8,7 +8,6 @@ function UserRequestsPage() {
   const [requests, setRequests] = useState([]);
   const [offers, setOffers] = useState([]);
   const [page, setPage] = useState(0);
-
   const [loading, setLoading] = useState(true);
   const [pageLoading, setPageLoading] = useState(false);
   const [error, setError] = useState("");
@@ -66,6 +65,7 @@ function UserRequestsPage() {
       }
     } catch (err) {
       console.error(err);
+
       setError(err.message || "Fehler beim Laden der Anfragen.");
       setStatusMessage("");
     } finally {
@@ -171,6 +171,7 @@ function UserRequestsPage() {
           >
             {refreshing ? "Aktualisiere..." : "Aktualisieren"}
           </button>
+
           <Link to="/request" className="primary-button">
             Neue Anfrage
           </Link>
@@ -192,7 +193,10 @@ function UserRequestsPage() {
         </p>
       )}
 
-      <div className="pagination-bar" aria-label="Seitennavigation für meine Anfragen">
+      <div
+        className="pagination-bar"
+        aria-label="Seitennavigation für meine Anfragen"
+      >
         <button
           type="button"
           className="secondary-button"
